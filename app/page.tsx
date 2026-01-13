@@ -1,8 +1,33 @@
-export default function Home() {
+// Components
+import ExploreBtn from "@/components/ExploreBtn";
+import EventCard from "@/components/EventCard";
+
+// Data
+import { events } from "@/lib/constants";
+
+export default function Page() {
   return (
-    <div className="h-screen w-screen flex items-center justify-center text-center">
-      <h1 className="text-4xl font-bold">DevEvent</h1>
-      <p className="text-lg">The Hub For Every Dev Event You Musn&apos;t Miss.</p>
-    </div>
+    <section>
+      <h1 className="text-center">
+        The Hub for Every Dev
+        <br />
+        Event You Musn&apos;t Miss.
+      </h1>
+      <p className="text-center mt-5">Hackathons, Workshops, and Conferences, all in one place.</p>
+
+      <ExploreBtn />
+
+      <div className="mt-20 space-y-7">
+        <h3>Featured Events</h3>
+
+        <ul className="events">
+          {events.map((event) => (
+            <li key={event.title}>
+              <EventCard {...event} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
