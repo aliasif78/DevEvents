@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
     turbopackFileSystemCacheForDev: true,
   },
 
+  // Support for Cloudinary
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+    ],
+  },
+
   // PostHog reverse proxy configuration
   async rewrites() {
     return [
