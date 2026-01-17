@@ -28,6 +28,10 @@ export async function POST(req: Request) {
     const image = formData.get("image") as File;
     if (!image) return NextResponse.json({ message: "No image uploaded" }, { status: 400 });
 
+    // Get the tags
+    const tags = JSON.parse(formData.get("tags") as string);
+    const agenda = JSON.parse(formData.get("agenda") as string);
+
     // Convert image to buffer
     const arrayBuffer = await image.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
@@ -43,7 +47,10 @@ export async function POST(req: Request) {
     });
 
     event.image = (uploadResult as { secure_url: string }).secure_url;
+    event.tags = tags;
+    event.agenda = agenda;
 
+    // Finally, create the event
     const createdEvent = await Event.create(event);
 
     return NextResponse.json({ message: "Event created successfully", event: createdEvent }, { status: 201 });
