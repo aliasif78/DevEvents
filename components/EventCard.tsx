@@ -16,15 +16,8 @@ interface Props {
 }
 
 const EventCard = ({ title, image, slug, location, date, time }: Props) => {
-  const handleClick = () => {
-    posthog.capture("event_card_clicked", {
-      event_title: title,
-      event_slug: slug,
-      event_location: location,
-      event_date: date,
-      event_time: time,
-    });
-  };
+  // Post Hog
+  const handleClick = () => posthog.capture("event_card_clicked", { event_title: title, event_slug: slug, event_location: location, event_date: date, event_time: time });
 
   return (
     <Link href={`/events/${slug}`} id="event-card" onClick={handleClick}>
