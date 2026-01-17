@@ -5,15 +5,11 @@ import { cacheLife } from "next/cache";
 import ExploreBtn from "@/components/ExploreBtn";
 import EventCard from "@/components/EventCard";
 
+// Actions
+import { getAllEvents } from "@/lib/actions/event.actions";
+
 // Types
 import { IEvent } from "@/database";
-// import { Event } from "@/lib/constants";
-
-// Data
-// import { events } from "@/lib/constants";
-
-// Env
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Page = async () => {
   // Caching
@@ -21,8 +17,7 @@ const Page = async () => {
   cacheLife("hours");
 
   // Fetch Requests
-  const res = await fetch(`${BASE_URL}/api/events`);
-  const { events } = await res.json();
+  const events = await getAllEvents();
 
   return (
     <section>

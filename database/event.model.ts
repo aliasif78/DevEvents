@@ -1,10 +1,10 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 
 /**
  * TypeScript interface for Event document
- * Extends Document to include Mongoose methods and properties
  */
-export interface IEvent extends Document {
+export interface IEvent {
+  _id: string;
   title: string;
   slug: string;
   description: string;
@@ -113,7 +113,7 @@ const EventSchema = new Schema<IEvent>(
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt
-  }
+  },
 );
 
 /**

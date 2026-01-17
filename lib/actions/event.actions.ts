@@ -24,3 +24,18 @@ export const getSimilarEventsBySlug = async (slug: string) => {
     return [];
   }
 };
+
+export const getAllEvents = async () => {
+  try {
+    await connectDB();
+
+    // 1. Get plain objects
+    const events = await Event.find().lean();
+
+    // 2. Convert ObjectId to String manually
+    return events.map((event) => ({ ...event, _id: event._id.toString() }));
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
