@@ -167,11 +167,6 @@ EventSchema.pre("save", function () {
 });
 
 /**
- * Create unique index on slug for faster queries and uniqueness constraint
- */
-EventSchema.index({ slug: 1 }, { unique: true });
-
-/**
  * Event Model
  * Prevents model recompilation during development hot reloads
  */

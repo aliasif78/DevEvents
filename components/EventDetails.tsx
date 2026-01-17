@@ -11,7 +11,7 @@ import EventCard from "./EventCard";
 import BookEvent from "./BookEvent";
 
 // Server Actions
-import { getSimilarEventsBySlug } from "@/lib/actions/event.actions";
+import { getEventBySlug, getSimilarEventsBySlug } from "@/lib/actions/event.actions";
 
 // Custom Components
 const EventDetailItem = ({ icon, alt, label }: { icon: string; alt: string; label: string }) => {
@@ -52,25 +52,25 @@ const EventTags = ({ tags }: { tags: string[] }) => {
 // Constants
 const BOOKINGS = 10;
 
-// Env
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
 const EventDetails = async ({ params }: { params: Promise<string> }) => {
   // Caching
   "use cache";
   cacheLife("hours");
 
-  // Get the event details
+  // 1. Correctly destructure slug from the resolved params object
   const slug = await params;
-  const req = await fetch(`${BASE_URL}/api/events/${slug}`);
-  const { event } = await req.json();
+
+  // 2. Fetch data
+  const event = await getEventBySlug(slug);
+
+  // 3. 🛑 SECURITY CHECK: Handle 404s before destructuring
+  if (!event) return notFound(); // Or redirect('/404')
+
+  // 4. Now safe to destructure (TypeScript knows 'event' is not null here)
   const { description, location, date, time, mode, agenda, audience, tags, image, overview, organizer } = event;
 
   // Server Actions
   const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
-
-  // Safety Check
-  if (!event) return notFound();
 
   return (
     <section id="event">
