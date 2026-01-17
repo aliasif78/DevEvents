@@ -1,16 +1,17 @@
 // Next Js
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { cacheLife } from "next/cache";
 
 // Components
 import BookEvent from "@/components/BookEvent";
+import EventCard from "@/components/EventCard";
 
 // Database
 import { IEvent } from "@/database";
 
 // Server Actions
-import { getSimilarEventsBySlug } from "@/lib/actions/event.action";
-import EventCard from "@/components/EventCard";
+import { getSimilarEventsBySlug } from "@/lib/actions/event.actions";
 
 // Env
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -55,6 +56,10 @@ const EventTags = ({ tags }: { tags: string[] }) => {
 const BOOKINGS = 10;
 
 const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  // Caching
+  "use cache";
+  cacheLife("hours");
+
   // Get the event details
   const { slug } = await params;
   const req = await fetch(`${BASE_URL}/api/events/${slug}`);
@@ -110,7 +115,7 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
             <h2>Book Your Spot</h2>
             {BOOKINGS > 0 ? <p className="text-sm">Join {BOOKINGS} people who have already booked their spot</p> : <p className="text-sm">Be the first to book your spot!</p>}
 
-            <BookEvent />
+            <BookEvent eventId={event._id} slug={event.slug} />
           </div>
         </aside>
       </div>

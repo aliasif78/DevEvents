@@ -1,3 +1,6 @@
+// Next Js
+import { cacheLife } from "next/cache";
+
 // Components
 import ExploreBtn from "@/components/ExploreBtn";
 import EventCard from "@/components/EventCard";
@@ -9,6 +12,11 @@ import { IEvent } from "@/database";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Page = async () => {
+  // Caching
+  "use cache";
+  cacheLife("hours");
+
+  // Fetch Requests
   const res = await fetch(`${BASE_URL}/api/events`);
   const { events } = await res.json();
 

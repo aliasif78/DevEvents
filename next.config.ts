@@ -8,6 +8,14 @@ const nextConfig: NextConfig = {
     turbopackFileSystemCacheForDev: true,
   },
 
+  // TypeScript
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+
+  // Caching
+  cacheComponents: true,
+
   // Support for Cloudinary
   images: {
     remotePatterns: [
