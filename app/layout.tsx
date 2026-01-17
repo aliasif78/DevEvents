@@ -32,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${schibstedGrotesk.variable} ${martianMono.variable} antialiased min-h-screen`}>
+      <body suppressHydrationWarning={true} className={`${schibstedGrotesk.variable} ${martianMono.variable} antialiased min-h-screen`}>
         <Navbar />
 
         <div className="absolute inset-0 top-0 -z-1 min-h-screen">

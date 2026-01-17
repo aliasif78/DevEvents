@@ -8,6 +8,7 @@ import Event from "./event.model";
 export interface IBooking extends Document {
   eventId: mongoose.Types.ObjectId;
   email: string;
+  slug: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -36,6 +37,10 @@ const BookingSchema = new Schema<IBooking>(
         },
         message: "Please provide a valid email address",
       },
+    },
+    slug: {
+      type: String,
+      required: [true, "Slug is required"],
     },
   },
   {
@@ -68,7 +73,7 @@ BookingSchema.index({ eventId: 1 });
  * Compound index for event-email uniqueness (prevents duplicate bookings)
  * Ensures a user can only book the same event once
  */
-BookingSchema.index({ eventId: 1, email: 1 }, { unique: true });
+BookingSchema.index({ eventId: 1, email: 1, slug: 1 }, { unique: true });
 
 /**
  * Booking Model

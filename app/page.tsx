@@ -1,16 +1,27 @@
+// Next Js
+import { cacheLife } from "next/cache";
+
 // Components
 import ExploreBtn from "@/components/ExploreBtn";
 import EventCard from "@/components/EventCard";
 
 // Types
-import { IEvent } from "@/database";
+import { Event } from "@/lib/constants";
+
+// Data
+import { events } from "@/lib/constants";
 
 // Env
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+// const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Page = async () => {
-  const res = await fetch(`${BASE_URL}/api/events`);
-  const { events } = await res.json();
+  // Caching
+  "use cache";
+  cacheLife("hours");
+
+  // Fetch Requests
+  // const res = await fetch(`${BASE_URL}/api/events`);
+  // const { events } = await res.json();
 
   return (
     <section>
@@ -28,7 +39,7 @@ const Page = async () => {
 
         <ul className="events">
           {events?.length &&
-            events.map((event: IEvent) => (
+            events.map((event: Event) => (
               <li key={event.title} className="list-none">
                 <EventCard {...event} />
               </li>
