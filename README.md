@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 DevEvents - https://dev-events-mu-lime.vercel.app/
 
-## Getting Started
+> **A full-stack event discovery and booking platform that turns developer event traffic into measurable conversion funnels.** It solves fragmented discovery and low-intent signup drop-off by combining high-performance content delivery, resilient booking workflows, and product analytics instrumentation built for scale-ready growth teams.
 
-First, run the development server:
+## 🏗️ Architecture & Key Capabilities
+
+- 🔁 **Connection Pool Safety (Mongoose):** Implemented global MongoDB connection caching with promise reuse to prevent hot-reload connection storms and improve reliability under repeated server invocations.
+- 🧩 **Data Integrity Guardrails (MongoDB Indexes):** Enforced compound uniqueness on bookings (`eventId`, `email`, `slug`) and referential pre-save validation to block duplicate registrations and preserve transactional correctness.
+- 🖼️ **Media Ingestion Pipeline (Cloudinary):** Streamed uploaded event images from API form-data buffers directly to Cloudinary in WebP format, reducing asset weight and improving page load performance at scale.
+- 📈 **Conversion Observability (PostHog):** Added event-level click and booking telemetry with reverse-proxied ingest routes, improving analytics signal reliability and enabling recruiter-friendly proof of product impact.
+
+## 🛠️ Tech Stack
+
+- **💻 Frontend:** Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, OGL
+- **⚙️ Backend:** Next.js Route Handlers, Server Actions, Mongoose, Cloudinary SDK
+- **🗄️ Infrastructure & Ops:** MongoDB, Cloudinary CDN, PostHog Analytics, Vercel-ready deployment
+
+## 🚀 Quick Start
 
 ```bash
+git clone https://github.com/aliasif78/DevEvents.git
+cd DevEvents
+npm install
+cat > .env.local << 'EOF'
+MONGODB_URI=your_mongodb_connection_string
+NEXT_PUBLIC_POSTHOG_KEY=your_posthog_project_api_key
+EOF
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
